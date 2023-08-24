@@ -7,7 +7,7 @@ const User = require('./models/user')
 const Order = require('./models/order')
 
 const app = express();
-const port = "https://ecommerceapi-qlq3.onrender.com";
+const port = 8080;
 const cors = require('cors')
 app.use(cors())
 
