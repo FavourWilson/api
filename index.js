@@ -57,23 +57,36 @@ const generateSecretKey = () => {
 }
 const secretKey = generateSecretKey();
 
-app.post('/register', async (req, res) => {
-    try {
-        const { name, email, password } = req.body
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-            return res.status(400).json({message:"Email already used"})
-        }
+app.post("/register", async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
 
-        const newUser = await User.create({ name, email, password });
-        newUser.verificationToken = crypto.randomBytes(20).toString("hex");
-
-        sendVerificationEmail(newUser.email, newUser.verificationToken )
-    } catch (error) {
-        console.log("error registering user", error)
-        res.status(500).json({ message: "Registering failed" })
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      console.log("Email already registered:", email); 
+      return res.status(400).json({ message: "Email already registered" });
     }
-})
+
+    // Create a new user
+    const newUser = new User({ name, email, password });
+
+    newUser.verificationToken = crypto.randomBytes(20).toString("hex");
+
+    await newUser.save();
+
+    console.log("New User Registered:", newUser);
+
+    sendVerificationEmail(newUser.email, newUser.verificationToken);
+
+    res.status(201).json({
+      message:
+        "Registration successful. Please check your email for verification.",
+    });
+  } catch (error) {
+    console.log("Error during registration:", error); // Debugging statement
+    res.status(500).json({ message: "Registration failed" });
+  }
+});
 
 app.get('/verify/:token', async (req, res) => {
     try {
