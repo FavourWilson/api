@@ -34,7 +34,7 @@ const sendVerificationEmail = async (email, verificationToken) => {
         service: "gmail",
         auth: {
         user: 'freecodingboy@gmail.com',
-        password:'pisyzdsildsyrpqz'
+        pass:'pisyzdsildsyrpqz'
     }
     })
 
@@ -65,8 +65,8 @@ app.post('/register', async (req, res) => {
             return res.status(400).json({message:"Email already used"})
         }
 
-        const newUser = new User((name, email, password))
-        newUser.verificationToken = cryto.randomBytes(20).toString("hex");
+        const newUser = new User({ name, email, password })
+        newUser.verificationToken = crypto.randomBytes(20).toString("hex");
         await newUser.save();
 
         sendVerificationEmail(newUser.email, newUser.verificationToken )
