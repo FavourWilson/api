@@ -11,12 +11,12 @@ const port = 8080;
 const cors = require('cors')
 app.use(cors())
 
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb', extended: true}));
 
 const jwt = require("jsonwebtoken")
 
-mongoose.connect('mongodb+srv://freecoder:rFyYOnXg51PITZZP@cluster0.pvvqq.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://freecoder:DVNwhmWzsO3OXWSI@cluster0.pvvqq.mongodb.net/?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology:true
 }).then(() => {
