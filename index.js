@@ -65,9 +65,8 @@ app.post('/register', async (req, res) => {
             return res.status(400).json({message:"Email already used"})
         }
 
-        const newUser = new User.create({ name, email, password })
+        const newUser = await User.create({ name, email, password });
         newUser.verificationToken = crypto.randomBytes(20).toString("hex");
-        await newUser.save();
 
         sendVerificationEmail(newUser.email, newUser.verificationToken )
     } catch (error) {
