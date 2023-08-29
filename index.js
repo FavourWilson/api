@@ -68,11 +68,11 @@ app.post("/register", async (req, res) => {
     }
 
     // Create a new user
-    const newUser = new User({ name, email, password });
+    const newUser = await User.create({ name, email, password });
 
     newUser.verificationToken = crypto.randomBytes(20).toString("hex");
 
-    await newUser.save();
+   
 
     console.log("New User Registered:", newUser);
 
@@ -124,7 +124,7 @@ app.post('/login', async (req, res) => {
     }
 })
 
-app.post("/address", async (req,res )=>{
+app.post("/addresses", async (req,res )=>{
     try {
         const { userId, address } = req.body;
         const user = await User.findById(userId);
