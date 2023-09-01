@@ -163,7 +163,7 @@ app.post('/orders', async (req, res) => {
             return res.status(404).json({message:"User not found"})
         }
         const products = cartItems.map((item) => ({
-            name: item?.name,
+            name: item?.title,
             quantity: item?.quantity,
             price: item?.price,
             image:item?.image
