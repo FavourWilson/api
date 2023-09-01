@@ -157,7 +157,7 @@ app.get("/addresses/:userId", async (req, res) => {
 
 app.post('/orders', async (req, res) => {
     try {
-        const { userId, cartItems, totalPrice, shippingAddress, payMethod } = req.body;
+        const { userId, cartItems, totalPrice, shippingAddress, paymentMethod } = req.body;
         const user = await User.findById(userId)
         if (!user) {
             return res.status(404).json({message:"User not found"})
@@ -174,7 +174,7 @@ app.post('/orders', async (req, res) => {
             products: products,
             totalPrice: totalPrice,
             shippingAddress: shippingAddress,
-            paymentMethod:paymentMethod
+            paymentMethod: paymentMethod
         })
         await order.save();
         res.status(200).json({message:"Order created successfully"})
