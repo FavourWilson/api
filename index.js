@@ -5,7 +5,6 @@ const crypto = require('crypto')
 const nodemailer = require('nodemailer')
 const User = require('./models/user')
 const Order = require('./models/order')
-
 const app = express();
 const port = 8080;
 const cors = require('cors')
@@ -42,7 +41,7 @@ const sendVerificationEmail = async (email, verificationToken) => {
         from: "amazon.com",
         to: email,
         subject: "Email Verification",
-        text:`Please click the following link to verify your email: http://localhost:8080/verify/${verificationToken}`
+        text:`Please click the following link to verify your email: https://ecommerceapi-qlq3.onrender.com/verify/${verificationToken}`
     }
 
     try {
